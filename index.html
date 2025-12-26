@@ -95,39 +95,42 @@
 
     <div class="slideshow-container">
         <div class="slide fade" style="display: block;">
-            <img src="32731.jpg" alt="Title Slide: URL Shift Production Environment">
+            <img src="Screenshot_20251226-122704.jpg" alt="Title Slide">
         </div>
         <div class="slide fade">
-            <img src="32739.jpg" alt="Why We Are Making This Change Now">
+            <img src="Screenshot_20251226-122717.jpg" alt="Why We Are Making This Change">
         </div>
         <div class="slide fade">
-            <img src="32737.jpg" alt="The Strategy Driving This Evolution">
+            <img src="Screenshot_20251226-122727.jpg" alt="Strategic Evolution">
         </div>
         <div class="slide fade">
-            <img src="32741.jpg" alt="A Centralized Future Means a Stronger Platform">
+            <img src="Screenshot_20251226-122737.jpg" alt="Centralized Future Benefits">
         </div>
         <div class="slide fade">
-            <img src="32735.jpg" alt="Your Services and Data Remain Unchanged">
+            <img src="Screenshot_20251226-122749.jpg" alt="Services and Data Integrity">
         </div>
         <div class="slide fade">
-            <img src="32733.jpg" alt="Action Required: Endpoint Update Within 24 Hours">
+            <img src="Screenshot_20251226-122801.jpg" alt="Endpoint Update Requirement">
         </div>
         <div class="slide fade">
-            <img src="32743.jpg" alt="Your Action Plan: A 3-Step Migration">
+            <img src="Screenshot_20251226-122810.jpg" alt="3-Step Action Plan">
         </div>
         <div class="slide fade">
-            <img src="32745.jpg" alt="Step 1: Update Your Application Endpoint">
+            <img src="Screenshot_20251226-122821.jpg" alt="Step 1: Update Codebase">
         </div>
         <div class="slide fade">
-            <img src="32747.jpg" alt="Step 2 and 3: Deploy and Verify Your Connection">
+            <img src="Screenshot_20251226-122832.jpg" alt="Step 2 and 3: Deploy and Verify">
         </div>
         <div class="slide fade">
-            <img src="32749.jpg" alt="Your Migration Checklist">
+            <img src="Screenshot_20251226-122841.jpg" alt="Migration Checklist">
+        </div>
+        <div class="slide fade">
+            <img src="Screenshot_20251226-122853.jpg" alt="Final Summary">
         </div>
 
         <div class="controls">
             <button id="prevBtn" onclick="changeSlide(-1)">Back</button>
-            <div class="progress" id="slideNum">Slide 1 of 10</div>
+            <div class="progress" id="slideNum">Slide 1 of 11</div>
             <button id="nextBtn" onclick="changeSlide(1)">Next</button>
         </div>
     </div>
@@ -156,7 +159,6 @@
             nextBtn.innerText = currentSlide === slides.length - 1 ? "Restart" : "Next";
         }
 
-        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (e.key === "ArrowLeft") changeSlide(-1);
             if (e.key === "ArrowRight") changeSlide(1);
