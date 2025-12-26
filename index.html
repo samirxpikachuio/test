@@ -3,168 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Production Migration Slideshow</title>
+    <title>Production Migration | Auto-Presentation</title>
     <style>
         :root {
             --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --accent-color: #3b82f6;
+            --control-bg: rgba(30, 41, 59, 0.95);
+            --text-main: #f8fafc;
+            --accent: #3b82f6;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+        body, html {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden; /* Prevents scrollbars in presentation mode */
+        }
+
+        /* Auto-adjusting Container (PDF Style) */
+        .slide-stage {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .slideshow-container {
-            position: relative;
-            max-width: 1000px;
-            width: 90%;
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
         }
 
         .slide {
             display: none;
-            text-align: center;
+            width: 100%;
+            height: 100%;
             padding: 20px;
+            box-sizing: border-box;
         }
 
+        .slide.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        /* Image Scaling: Fits to screen without distortion */
         .slide img {
             max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid #334155;
+            max-height: 100%;
+            object-fit: contain;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            border-radius: 4px;
         }
 
+        /* Controls Overlay */
         .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--control-bg);
+            padding: 12px 24px;
+            border-radius: 50px;
             display: flex;
-            justify-content: space-between;
+            gap: 15px;
             align-items: center;
-            padding: 20px;
-            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 100;
+            transition: opacity 0.3s;
         }
+
+        .controls:hover { opacity: 1; }
 
         button {
-            background-color: var(--accent-color);
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.2s;
+            font-size: 14px;
+            transition: all 0.2s;
         }
 
         button:hover {
-            opacity: 0.9;
+            background: var(--accent);
+            border-color: var(--accent);
         }
 
-        button:disabled {
-            background-color: #475569;
-            cursor: not-allowed;
-        }
-
-        .progress {
-            font-size: 0.9rem;
+        .auto-tag {
+            font-size: 12px;
             color: #94a3b8;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .fade {
-            animation: fadeIn 0.5s;
+        /* PDF/Print view logic */
+        @media print {
+            .controls { display: none; }
+            body { overflow: visible; background: white; }
+            .slide { display: block !important; page-break-after: always; height: auto; }
+            .slide img { box-shadow: none; width: 100%; }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="slideshow-container">
-        <div class="slide fade" style="display: block;">
-            <img src="Screenshot_20251226-122704.jpg" alt="Title Slide">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122717.jpg" alt="Why We Are Making This Change">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122727.jpg" alt="Strategic Evolution">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122737.jpg" alt="Centralized Future Benefits">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122749.jpg" alt="Services and Data Integrity">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122801.jpg" alt="Endpoint Update Requirement">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122810.jpg" alt="3-Step Action Plan">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122821.jpg" alt="Step 1: Update Codebase">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122832.jpg" alt="Step 2 and 3: Deploy and Verify">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122841.jpg" alt="Migration Checklist">
-        </div>
-        <div class="slide fade">
-            <img src="Screenshot_20251226-122853.jpg" alt="Final Summary">
-        </div>
+    <div class="slide-stage" id="stage">
+        <div class="slide active"><img src="Screenshot_20251226-122704.jpg" alt="Slide 1"></div>
+        <div class="slide"><img src="Screenshot_20251226-122717.jpg" alt="Slide 2"></div>
+        <div class="slide"><img src="Screenshot_20251226-122727.jpg" alt="Slide 3"></div>
+        <div class="slide"><img src="Screenshot_20251226-122737.jpg" alt="Slide 4"></div>
+        <div class="slide"><img src="Screenshot_20251226-122749.jpg" alt="Slide 5"></div>
+        <div class="slide"><img src="Screenshot_20251226-122801.jpg" alt="Slide 6"></div>
+        <div class="slide"><img src="Screenshot_20251226-122810.jpg" alt="Slide 7"></div>
+        <div class="slide"><img src="Screenshot_20251226-122821.jpg" alt="Slide 8"></div>
+        <div class="slide"><img src="Screenshot_20251226-122832.jpg" alt="Slide 9"></div>
+        <div class="slide"><img src="Screenshot_20251226-122841.jpg" alt="Slide 10"></div>
+        <div class="slide"><img src="Screenshot_20251226-122853.jpg" alt="Slide 11"></div>
+    </div>
 
-        <div class="controls">
-            <button id="prevBtn" onclick="changeSlide(-1)">Back</button>
-            <div class="progress" id="slideNum">Slide 1 of 11</div>
-            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
-        </div>
+    <div class="controls">
+        <span class="auto-tag" id="status">Manual</span>
+        <button onclick="changeSlide(-1)">Prev</button>
+        <button id="playBtn" onclick="toggleAuto()">Play Auto</button>
+        <button onclick="changeSlide(1)">Next</button>
+        <button onclick="window.print()">Save PDF</button>
     </div>
 
     <script>
-        let currentSlide = 0;
+        let currentIdx = 0;
+        let autoInterval = null;
         const slides = document.querySelectorAll('.slide');
-        const slideNumDisplay = document.getElementById('slideNum');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
+        const playBtn = document.getElementById('playBtn');
+        const statusTag = document.getElementById('status');
 
-        function changeSlide(direction) {
-            slides[currentSlide].style.display = "none";
-            currentSlide += direction;
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            
+            if (index >= slides.length) currentIdx = 0;
+            else if (index < 0) currentIdx = slides.length - 1;
+            else currentIdx = index;
 
-            if (currentSlide >= slides.length) { currentSlide = 0; }
-            if (currentSlide < 0) { currentSlide = slides.length - 1; }
-
-            slides[currentSlide].style.display = "block";
-            updateUI();
+            slides[currentIdx].classList.add('active');
         }
 
-        function updateUI() {
-            slideNumDisplay.innerText = `Slide ${currentSlide + 1} of ${slides.length}`;
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.innerText = currentSlide === slides.length - 1 ? "Restart" : "Next";
+        function changeSlide(dir) {
+            if (autoInterval) toggleAuto(); // Stop auto if user interacts
+            showSlide(currentIdx + dir);
         }
 
+        function toggleAuto() {
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+                playBtn.innerText = "Play Auto";
+                statusTag.innerText = "Manual";
+                statusTag.style.color = "#94a3b8";
+            } else {
+                autoInterval = setInterval(() => showSlide(currentIdx + 1), 4000); // 4 seconds per slide
+                playBtn.innerText = "Stop";
+                statusTag.innerText = "Live";
+                statusTag.style.color = "#3b82f6";
+            }
+        }
+
+        // Key Listeners
         document.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowRight" || e.key === " ") changeSlide(1);
             if (e.key === "ArrowLeft") changeSlide(-1);
-            if (e.key === "ArrowRight") changeSlide(1);
         });
-
-        updateUI();
     </script>
 </body>
 </html>
