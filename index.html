@@ -1,59 +1,168 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>THE BACKEND ARCHITECT</title><script src="https://cdn.tailwindcss.com"></script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"><style>:root {
-        --neon-green: #ccff00;
-        --neon-pink: #ff00ff;
-        --brutal-black: #0a0a0a;
-        --brutal-white: #fdfdfd;
-      }
-      
-       /* Custom Scrollbar for that raw feel */
-      ::-webkit-scrollbar {
-        width: 12px;
-      }
-      ::-webkit-scrollbar-track {
-         background: #000;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: var(--neon-green);
-        border: 2px solid #000;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--neon-pink);
-      }
-      body {
-        background-color: var(--brutal-white);
-        color: var(--brutal-black);
-        overflow-x: hidden;
-      }</style><script>tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              'neon-green': 'var(--neon-green)',
-              'neon-pink': 'var(--neon-pink)',
-              'brutal-black': 'var(--brutal-black)',
-              'brutal-white': 'var(--brutal-white)',
-            },
-            fontFamily: {
-              sans: ['"Archivo Black"', 'sans-serif'],
-              mono: ['"Space Mono"', 'monospace'],
-            },
-            boxShadow: {
-              'brutal': '8px 8px 0px 0px #000000',
-              'brutal-sm': '4px 4px 0px 0px #000000',
-              'brutal-lg': '12px 12px 0px 0px #000000',
-              'brutal-reverse': '-8px 8px 0px 0px #000000',
-            }
-          }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Migration Slideshow</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --accent-color: #3b82f6;
         }
-      }</script><script type="importmap">{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "path": "https://aistudiocdn.com/path@^0.12.7",
-    "url": "https://aistudiocdn.com/url@^0.11.4"
-  }
-}</script><link rel="stylesheet" href="/index.css"></head><body><div id="root"></div><script type="module" src="/index.tsx"></script><script defer="defer" src="bundle.js"></script></body></html>
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slideshow-container {
+            position: relative;
+            max-width: 1000px;
+            width: 90%;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+        }
+
+        .progress {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .fade {
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slideshow-container">
+        <div class="slide fade" style="display: block;">
+            <img src="32731.jpg" alt="Title Slide: URL Shift Production Environment">
+        </div>
+        <div class="slide fade">
+            <img src="32739.jpg" alt="Why We Are Making This Change Now">
+        </div>
+        <div class="slide fade">
+            <img src="32737.jpg" alt="The Strategy Driving This Evolution">
+        </div>
+        <div class="slide fade">
+            <img src="32741.jpg" alt="A Centralized Future Means a Stronger Platform">
+        </div>
+        <div class="slide fade">
+            <img src="32735.jpg" alt="Your Services and Data Remain Unchanged">
+        </div>
+        <div class="slide fade">
+            <img src="32733.jpg" alt="Action Required: Endpoint Update Within 24 Hours">
+        </div>
+        <div class="slide fade">
+            <img src="32743.jpg" alt="Your Action Plan: A 3-Step Migration">
+        </div>
+        <div class="slide fade">
+            <img src="32745.jpg" alt="Step 1: Update Your Application Endpoint">
+        </div>
+        <div class="slide fade">
+            <img src="32747.jpg" alt="Step 2 and 3: Deploy and Verify Your Connection">
+        </div>
+        <div class="slide fade">
+            <img src="32749.jpg" alt="Your Migration Checklist">
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">Back</button>
+            <div class="progress" id="slideNum">Slide 1 of 10</div>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const slideNumDisplay = document.getElementById('slideNum');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function changeSlide(direction) {
+            slides[currentSlide].style.display = "none";
+            currentSlide += direction;
+
+            if (currentSlide >= slides.length) { currentSlide = 0; }
+            if (currentSlide < 0) { currentSlide = slides.length - 1; }
+
+            slides[currentSlide].style.display = "block";
+            updateUI();
+        }
+
+        function updateUI() {
+            slideNumDisplay.innerText = `Slide ${currentSlide + 1} of ${slides.length}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.innerText = currentSlide === slides.length - 1 ? "Restart" : "Next";
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowLeft") changeSlide(-1);
+            if (e.key === "ArrowRight") changeSlide(1);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
